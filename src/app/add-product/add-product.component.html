@@ -1,0 +1,61 @@
+<!-- <form novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)"> -->
+    
+    <div class="mb-3">
+        <label for="category" class="form-label">product category</label>
+        <select class="form-select" [(ngModel)]="selectedCategory.id" (change)="onSelectSubcategory(selectedCategory.id)"
+            aria-label="Default select example" id="category" >
+            <option selected>select</option>
+            <option *ngFor="let category of Categorylist" value={{category.id}}>{{category.name}}</option>
+        </select>
+    </div>
+    <form [formGroup]= "newProductForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(newProductForm.value)">
+    <div class="mb-3">
+        <label for="subcategory" class="form-label">product subcategory</label>
+        <select class="form-select" aria-label="Default select example" id="subcategory" formControlName="subcategory">
+            <option selected>select</option>
+            <option *ngFor="let subcategory of SubcategoryList" value={{subcategory.id}}>{{subcategory.name}}</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="discount" class="form-label">discount</label>
+        <select class="form-select" aria-label="Default select example" id="discount" formControlName="discount">
+            <option *ngFor="let discount of DiscountList" value={{discount.id}}>{{discount.type}} value = {{discount.value |
+                currency : "INR"}}</option>
+        </select>
+    </div>
+    <div class=" mb-3">
+        <label for="productName" class="form-label">name</label>
+        <input type="text" class="form-control" id="productName" formControlName="productName">
+    </div>
+    
+    <div class=" mb-3">
+        <label for="productDescription">description</label>
+        <textarea class="form-control" id="productDescription" formControlName="productDescription" rows="3"></textarea>
+    </div>
+    
+    <div class="mb-3 ">
+        <label for="price">price</label>
+        <input type="text" id="price" class="form-control" formControlName="price" aria-label="rupees amount">
+    </div>
+    <div class=" mb-3">
+        <label for="brand">brand</label>
+        <input type="text" class="form-control" id="brand" formControlName="brand" aria-label="Amount (to the nearest dollar)">
+    </div>
+    <div class="mb-3">
+        <label for="quantity">quantity</label>
+        <div class="quantity d-flex align-items-center">
+            <input type="number" id="quantity" formControlName="quantity" class="input-text qty text form-control w-25 mr-3" step="1" min="1"
+                name="quantity" value="1" title="Qty" size="4">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="formFileSm" class="form-label">image</label>
+        <input class="form-control form-control-sm" (change)="onSelectFile($event)" id="formFileSm" formControlName="formFileImg" type="file">
+    </div>
+
+    <button type="submit">Create</button>
+</form>
+
+
+
+
