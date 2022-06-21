@@ -6,4 +6,5 @@ export class UserForRegistrationModel {
     confirmPassword :string='';
     phoneNumber: string='';
     age:number=0;
+   
 }

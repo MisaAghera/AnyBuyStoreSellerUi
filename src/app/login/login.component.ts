@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthResponseModel } from '../shared/models/auth-response-model.model'; 
-import { UserForAuthenticationModel } from '../shared/models/user-for-authentication-model.model'; 
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../shared/services/authentication.service'; 
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthResponseModel } from '../shared/models/auth-response-model.model';
+import { UserForAuthenticationModel } from '../shared/models/user-for-authentication-model.model';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,57 +13,66 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
+  submitted = false;
+  private returnUrl: string | undefined;
 
-  private returnUrl: string | undefined; 
-
-  loginForm: FormGroup = new FormGroup({});
+  loginForm: FormGroup = new FormGroup({
+    username: new FormControl(""),
+    password: new FormControl("")
+  });
   errorMessage: string = '';
   showError: boolean | undefined;
 
-  constructor(private authService: AuthenticationService, private router: Router, private route: ActivatedRoute) { }
-  
+  constructor(private authService: AuthenticationService, 
+    private router: Router, 
+    private formBuilder: FormBuilder) { }
+
   ngOnInit(): void {
-    this.loginForm = new FormGroup({
-      username: new FormControl("", [Validators.required]),
-      password: new FormControl("", [Validators.required])
-    })
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.loginForm = this.formBuilder.group(
+      {
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required]],
+      }
+    );
   }
 
-  // validateControl = (controlName: string) => {
-  //   return this.loginForm.get(controlName).invalid && this.loginForm.get(controlName).touched
-  // }
+  get f(): { [key: string]: AbstractControl } {
+    return this.loginForm.controls;
+  }
 
-  // hasError = (controlName: string, errorName: string) => {
-  //   return this.loginForm.get(controlName).hasError(errorName)
-  // }
-  
-  loginUser = (loginFormValue:any) => {
-    this.showError = false;
-    const login = {... loginFormValue };
-  
-    
+  onReset(): void {
+    this.submitted = false;
+    this.loginForm.reset();
+  }
+  loginUser = (loginFormValue: any) => {
+    debugger
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+    const login = { ...loginFormValue };
+
     var userForAuth: InModel = new InModel();
     userForAuth.In.username = login.username;
     userForAuth.In.password = login.password;
 
-
     this.authService.loginUser(userForAuth)
-    .subscribe({
-      next: (res:AuthResponseModel) => {
-       localStorage.setItem("token", res.token);
-       this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-       this.router.navigate([this.returnUrl]);
-    },
-    error: (err: HttpErrorResponse) => {
-      this.errorMessage = err.message;
-      this.showError = true;
-    }})
-  
+      .subscribe({
+        next: (res: AuthResponseModel) => {
+          localStorage.setItem("token", res.token);
+          this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
+          this.router.navigate([this.returnUrl]);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorMessage = err.message;
+          this.showError = true;
+        }
+      })
+
   }
 }
 
 
-class InModel{
+class InModel {
   In: UserForAuthenticationModel = new UserForAuthenticationModel();
 }

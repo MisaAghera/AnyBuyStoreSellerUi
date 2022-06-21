@@ -1,72 +1,117 @@
 <div class="card">
-    <div class="card-body">
-        <h1 class="card-title">Register</h1>
-        <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
-            <div class="mb-3 row">
-                <label for="age">age</label>
-                <div class="age d-flex align-items-center">
-                    <input type="number" id="age" formControlName="age" class="input-text qty text form-control w-25 mr-3" step="1" min="1"
-                        name="age" value="1" title="age" size="4">
-                </div>
+  <div class="card-body">
+    <h1 class="card-title">Register</h1>
+    <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
+      <div class="mb-3 row">
+        <label for="age" class="col-form-label col-sm-2">age:</label>
+        <div class="col-md-5">
+          <input type="number" id="age" formControlName="age" class="form-control" min="1" />
+          <div *ngIf="submitted && f['age'].errors" class="invalid-feedback">
+            <div *ngIf="f['age'].errors['required']">age is required</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mb-3 row">
+        gender:
+        <select name="gender" id="gender" formControlName="gender" class="form-select ">
+          <option value="male">male</option>
+          <option value="female">female</option>
+        </select>
+        <div *ngIf="submitted && f['gender'].errors" class="invalid-feedback">
+          <div *ngIf="f['gender'].errors['required']">gender is required</div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="username" class="col-form-label col-sm-2">username:</label>
+        <div class="col-md-5">
+          <input type="text" id="username" formControlName="username" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
+          <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+            <div *ngIf="f['username'].errors['required']">username is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="email" class="col-form-label col-sm-2">Email:</label>
+        <div class="col-md-5">
+          <input type="text" id="email" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+          <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="phoneNumber" class="col-form-label col-sm-2">phone number:</label>
+        <div class="col-md-5">
+          <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
+        </div>
+        <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+          <div *ngIf="f['phoneNumber'].errors['required']">phoneNumber is required</div>
+          <div *ngIf="f['phoneNumber'].errors['pattern']">
+            phone number is not valid
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="password" class="col-form-label col-sm-2">Password:</label>
+        <div class="col-md-5">
+          <input type="password" id="password" formControlName="password" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+          <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+            <div *ngIf="f['password'].errors['required']">Password is required</div>
+            <div *ngIf="f['password'].errors['minlength']">
+              Password must be at least 6 characters
             </div>
-            <div class="mb-3 row">
-                <label>
-                    <input type="radio" value="male" formControlName="gender">
-                      <span>male</span>
-                  </label>
-                  <label>
-                    <input type="radio" value="female" formControlName="gender">
-                      <span>female</span>
-                  </label>
+            <div *ngIf="f['password'].errors['maxlength']">
+              Username must not exceed 40 characters
             </div>
-            <div class="mb-3 row">
-                <label for="username" class="col-form-label col-sm-2">username:</label>
-                <div class="col-md-5">
-                    <input type="text" id="username" formControlName="username" class="form-control" />
-                </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3 row">
+        <label for="confirmPassword" class="col-form-label col-sm-2">Confirm Password:</label>
+        <div class="col-md-5">
+          <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }" />
+          <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+            <div *ngIf="f['confirmPassword'].errors['required']">
+              Confirm Password is required
             </div>
-            <div class="mb-3 row">
-                <label for="email" class="col-form-label col-sm-2">Email:</label>
-                <div class="col-md-5">
-                    <input type="email" id="email" formControlName="email" class="form-control" />
-                </div>
-                <!-- <div class="col-md-5">
-                    <em *ngIf="validateControl('email') && hasError('email', 'email')">Please provide a valid email</em>
-                    <em *ngIf="validateControl('email') && hasError('email', 'required')">Email is required</em>
-                </div> -->
+            <div *ngIf="f['confirmPassword'].errors['matching']">
+              Confirm Password does not match
             </div>
-            <div class="mb-3 row">
-                <label for="password" class="col-form-label col-sm-2">Password:</label>
-                <div class="col-md-5">
-                    <input type="password" id="password" formControlName="password" class="form-control" />
-                </div>
-                <!-- <div class="col-md-5">
-                    <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
-                </div> -->
-            </div>
-            <div class="mb-3 row">
-                <label for="confirm" class="col-form-label col-sm-2">Confirm Password:</label>
-                <div class="col-md-5">
-                    <input type="password" id="confirm" formControlName="confirm" class="form-control" />
-                </div>
-            </div>
-            <br>
-            <div class="mb-3 row">
-                <div class="col-md-1">          
-                    <button type="submit" class="btn btn-info" [disabled]="!registerForm.valid">Register</button>
-                </div>
-            </div>
-        </form>
-    </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="mb-3 row">
+        <div class="col-md-1">
+          <button type="submit" class="btn btn-info">Register</button>
+          </div>
+        <div class="col-md-1">
+          <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+            Reset
+          </button>
+        </div>
+
+      </div>
+    </form>
   </div>
-  
-  
-  
-  
-  
-  
-  
-  <!-- <div class="account section">
+</div>
+
+
+
+
+
+
+
+<!-- <div class="account section">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-6">
@@ -102,4 +147,3 @@
         </div>
       </div>
     </div> -->
-  

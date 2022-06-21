@@ -8,6 +8,9 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { HeaderComponent } from './header/header.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ErrorCatchingInterceptor } from './shared/interceptors/error-catching.interceptor';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { ProductsComponent } from './products/products.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AddProductComponent,
     HeaderComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ProductCardComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +29,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorCatchingInterceptor,
+      multi: true
+  }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

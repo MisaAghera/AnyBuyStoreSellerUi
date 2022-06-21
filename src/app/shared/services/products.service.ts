@@ -13,6 +13,8 @@ export class ProductService {
   readonly getBySubIdUrl = GlobalConstants.apiURL+'Product/GetAllBySubId?SubcategoryId=';
   readonly getByIdUrl = GlobalConstants.apiURL+ 'Product/GetById/';
   readonly AddUrl = GlobalConstants.apiURL+ 'Product/Add';
+  readonly getByUserUrl = GlobalConstants.apiURL + 'Product/GetAllByUSerId?UserId=';
+  
 
   constructor(private http :HttpClient) { }
 
@@ -27,12 +29,15 @@ export class ProductService {
   getById(ProductId: number): Observable<ProductModel> {
     return this.http.get<ProductModel>(this.getByIdUrl+ProductId)  
   }
+
+  getByUserId(UserId: number): Observable<ProductModel> {
+    return this.http.get<ProductModel>(this.getByIdUrl+UserId)  
+  }
   
   add(body : InModelProduct){
     return this.http.post(this.AddUrl , body);
   }
 }
-
 
 class InModelProduct{
   In: ProductModel = new ProductModel();

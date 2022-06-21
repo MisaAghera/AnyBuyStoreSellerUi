@@ -7,8 +7,6 @@ const routes: Routes = [
   { path:"product/add", component:AddProductComponent },
   { path:"login", component:LoginComponent },
   { path:"signup", component:SignupComponent },
-
-
 ];
 
 @NgModule({

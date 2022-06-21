@@ -1,42 +1,73 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/services/authentication.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserForRegistrationModel } from '../shared/models/user-for-registration-model.model';
-
+import { FormControl, AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomValidation } from "../shared/providers/custom-validators";
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  registerForm: FormGroup = new FormGroup({});
+  registerForm: FormGroup = new FormGroup({
+    username: new FormControl(''),
+    gender: new FormControl(''),
+    age: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl(''),
+    confirmPassword: new FormControl(''),
+    phoneNumber: new FormControl('')
+  });
 
-  constructor(private authService: AuthenticationService) {}
+  submitted = false;
+  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.registerForm = new FormGroup({
-      userName: new FormControl(''),
-      gender: new FormControl(''),
-      age: new FormControl(''),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('')
-    });
+   
+
+    this.registerForm = this.formBuilder.group(
+      {
+        username: ['', [Validators.required]],
+        age: ['', [Validators.required]],
+        gender: ['', [Validators.required]],
+        phoneNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern("[0-9 ]{10}")
+          ]
+        ],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(40)
+          ]
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validators: [CustomValidation.match('password', 'confirmPassword')]
+      }
+    );
+
   }
 
-  // public validateControl = (controlName: string) => {
-  //   return this.registerForm.get(controlName).invalid && this.registerForm.get(controlName).touched
-  // }
+  get f(): { [key: string]: AbstractControl } {
+    return this.registerForm.controls;
+  }
 
-  // public hasError = (controlName: string, errorName: string) => {
-  //   return this.registerForm.get(controlName).hasError(errorName)
-  // }
 
-  registerUser = (registerFormValue:any) => {
-    const formValues = {... registerFormValue };
-  
-    
+  registerUser = (registerFormValue: any) => {
+   
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+    }
+    const formValues = { ...registerFormValue };
     var userForRegister: InModel = new InModel();
     userForRegister.In.username = formValues.username;
     userForRegister.In.password = formValues.password;
@@ -44,15 +75,21 @@ export class SignupComponent implements OnInit {
     userForRegister.In.gender = formValues.gender;
     userForRegister.In.confirmPassword = formValues.confirmPassword;
     userForRegister.In.email = formValues.email;
+    userForRegister.In.phoneNumber = formValues.phoneNumber;
   
     this.authService.registerUser(userForRegister)
-    .subscribe({
-      next: (_) => console.log("Successful registration"),
-      error: (err: HttpErrorResponse) => console.log(err.error.errors)
-    })
+      .subscribe({
+        next: (_) => console.log("Successful registration"),
+        error: (err: HttpErrorResponse) => console.log(err.error.errors)
+      })
   }
+  onReset(): void {
+    this.submitted = false;
+    this.registerForm.reset();
+  }
+
 }
-class InModel{
+class InModel {
   In: UserForRegistrationModel = new UserForRegistrationModel();
 }
 

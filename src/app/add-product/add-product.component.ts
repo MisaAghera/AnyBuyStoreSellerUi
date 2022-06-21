@@ -20,13 +20,15 @@ export class AddProductComponent implements OnInit {
   Categorylist?: CategoryModel[];
   SubcategoryList?: SubcategoryModel[];
   DiscountList?: DiscountModel[];
-
-  selectedFile?: File;
+  file :any;
+  //selectedFile?: File;
 
   newProductForm : FormGroup = new FormGroup({});
+  labelImport: any;
+  profileForm: any;
 
   constructor(public ProductService:ProductService,public CategoriesService: CategoriesService, public DiscountsService: DiscountsService, public SubcategoriesService: SubcategoriesService) { }
-
+ 
   getCategories(): void {
     this.CategoriesService.getAll().subscribe(result => {
       this.Categorylist = result;
@@ -39,18 +41,24 @@ export class AddProductComponent implements OnInit {
     });
   }
 
-  onSelectFile(fileInput: any) {
-    this.selectedFile = <File>fileInput.target.files[0];
-  }
+  // onSelectFile(fileInput: any) {
+  //   this.selectedFile = <File>fileInput.target.files[0];
+  // }
+  
   getDiscounts(): void {
     this.DiscountsService.getAll().subscribe(result => {
       this.DiscountList = result;
     });
   }
 
+  onFileChanged(e:any) {
+    this.file = e.target.files[0];
+  }
+
   onSubmit =(formValues :any)=>{
     debugger
     const formValue = {...formValues};
+
     var productDetails :InModel = new InModel();
     productDetails.In.brand = formValue.brand;
     productDetails.In.description = formValue.productDescription;
@@ -59,10 +67,9 @@ export class AddProductComponent implements OnInit {
     productDetails.In.price = formValue.price;
     productDetails.In.productSubcategoryId = formValue.subcategory;
     productDetails.In.quantity = formValue.quantity;
-    productDetails.In.imageUrl = 'img.jpg';
-    // productDetails.In.productImg = this.selectedFile;
+   // productDetails.In.imageUrl = 'img.jpg';
+    productDetails.In.productImg = this.file;
     productDetails.In.userId = 2;
-
 
     this.ProductService.add(productDetails).subscribe({
       next: (_) => console.log("Successfully added"),

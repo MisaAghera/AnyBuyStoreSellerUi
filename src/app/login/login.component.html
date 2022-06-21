@@ -1,44 +1,39 @@
 <div class="card">
     <div class="card-body">
       <h1 class="card-title">Login</h1>
-  
-      <div *ngIf="showError" class="alert alert-danger" role="alert">
-        {{errorMessage}}
-      </div>
-  
       <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)">
         <div class="mb-3 row">
           <label for="username" class="col-form-label col-sm-2">Username:</label>
           <div class="col-md-5">
-            <input type="text" id="username" formControlName="username" class="form-control" />
+            <input type="text" id="username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
+            <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+              <div *ngIf="f['username'].errors['required']">username is required</div>
+            </div>
           </div>
-          <!-- <div class="col-md-5">
-                    <em *ngIf="validateControl('username') && hasError('username', 'required')">Username is required</em>
-                </div>  -->
-  
-  
         </div>
         <div class="mb-3 row">
           <label for="password" class="col-form-label col-sm-2">Password:</label>
           <div class="col-md-5">
-            <input type="text" id="password" formControlName="password" class="form-control" />
+            <input type="text" id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
+            <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+              <div *ngIf="f['password'].errors['required']">password is required</div>
+            </div>
           </div>
-  
-          <!-- <div class="col-md-5">
-                    <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
-                </div>  -->
         </div>
         <br>
         <div class="mb-3 row">
           <div class="col-md-1">
-            <button type="submit" class="btn btn-info">Login</button>
-            <!-- <button type="submit" class="btn btn-info" [disabled]="!loginForm.valid">Login</button>  -->
+            <button type="submit" class="btn btn-success float-right">Login</button>
+            </div>
+            <div class="col-md-1">
+            <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+              Reset
+            </button>
           </div>
         </div>
       </form>
     </div>
   </div>
-  
   
   <!-- <div class="account section">
       <div class="container">

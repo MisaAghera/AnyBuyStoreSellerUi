@@ -14,7 +14,7 @@ export class AuthenticationService {
 
   formDataLogin: UserForAuthenticationModel = new UserForAuthenticationModel();
   readonly LoginUrl = GlobalConstants.apiURL + 'Authenticate/Login';
-  readonly RegisterUrl = GlobalConstants.apiURL + 'Authenticate/RegisterCustomer';
+  readonly RegisterUrl = GlobalConstants.apiURL + 'Authenticate/RegisterSeller';
 
   private authChangeSub = new Subject<boolean>()
   public authChanged = this.authChangeSub.asObservable();
