@@ -10,6 +10,7 @@ import { ProductService } from '../shared/services/products.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -27,7 +28,10 @@ export class AddProductComponent implements OnInit {
   labelImport: any;
   profileForm: any;
 
-  constructor(public ProductService:ProductService,public CategoriesService: CategoriesService, public DiscountsService: DiscountsService, public SubcategoriesService: SubcategoriesService) { }
+  constructor(public ProductService:ProductService,
+    public CategoriesService: CategoriesService, 
+    public DiscountsService: DiscountsService,
+     public SubcategoriesService: SubcategoriesService) { }
  
   getCategories(): void {
     this.CategoriesService.getAll().subscribe(result => {
@@ -67,8 +71,8 @@ export class AddProductComponent implements OnInit {
     productDetails.In.price = formValue.price;
     productDetails.In.productSubcategoryId = formValue.subcategory;
     productDetails.In.quantity = formValue.quantity;
-   // productDetails.In.imageUrl = 'img.jpg';
-    productDetails.In.productImg = this.file;
+   productDetails.In.imageUrl = 'img.jpg';
+   // productDetails.In.productImg = this.file;
     productDetails.In.userId = 2;
 
     this.ProductService.add(productDetails).subscribe({
@@ -86,7 +90,7 @@ export class AddProductComponent implements OnInit {
   price: new FormControl(''),
   brand: new FormControl(''),
   quantity: new FormControl(''),
-  formFileImg: new FormControl(''),
+  //formFileImg: new FormControl(''),
  });
     this.getCategories();
     this.onSelectSubcategory(this.selectedCategory.id);

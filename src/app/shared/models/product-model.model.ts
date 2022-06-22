@@ -14,7 +14,7 @@ export class ProductModel {
 
     brand: string = '';
 
-     productImg? : any ; 
+    //productImg? : any ; 
 
     imageUrl: string = '';
 

@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorCatchingInterceptor } from './shared/interceptors/error-catching.interceptor';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsComponent } from './products/products.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
@@ -20,14 +23,18 @@ import { ProductsComponent } from './products/products.component';
     SignupComponent,
     LoginComponent,
     ProductCardComponent,
-    ProductsComponent
+    ProductsComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+
   ],
   providers: [
     {

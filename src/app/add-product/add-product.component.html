@@ -1,5 +1,5 @@
 <!-- <form novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)"> -->
-    
+        <h3>Add Product</h3><br>
     <div class="mb-3">
         <label for="category" class="form-label">product category</label>
         <select class="form-select" [(ngModel)]="selectedCategory.id" (change)="onSelectSubcategory(selectedCategory.id)"
@@ -59,11 +59,11 @@
           <div *ngIf="form.picture.errors.required">Picture is required.</div>
         </div> -->
       <!-- </div> -->
-      
-    <div class="mb-3">
+<!-- this bottom one is the real one -->
+    <!-- <div class="mb-3">
         <label for="formFileSm" class="form-label">image</label>
         <input class="form-control form-control-sm" (change)="onFileChanged($event)" id="formFileSm" formControlName="formFileImg" type="file">
-    </div>
+    </div> -->
 
     <button type="submit">Create</button>
 </form>

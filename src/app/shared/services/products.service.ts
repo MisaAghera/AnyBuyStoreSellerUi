@@ -25,6 +25,9 @@ export class ProductService {
   getAllBySubcategoryId(SubcategoryId: number): Observable<Array<ProductModel>> {
     return this.http.get<Array<ProductModel>>(this.getBySubIdUrl+SubcategoryId)  
   }
+  getAllByUserId(UserId: number): Observable<Array<ProductModel>> {
+    return this.http.get<Array<ProductModel>>(this.getByUserUrl+UserId)  
+  }
 
   getById(ProductId: number): Observable<ProductModel> {
     return this.http.get<ProductModel>(this.getByIdUrl+ProductId)  

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card custom-style">
   <div class="card-body">
     <h1 class="card-title">Register</h1>
     <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
@@ -12,17 +12,23 @@
         </div>
 
       </div>
-
-      <div class="mb-3 row">
-        gender:
-        <select name="gender" id="gender" formControlName="gender" class="form-select ">
-          <option value="male">male</option>
-          <option value="female">female</option>
-        </select>
-        <div *ngIf="submitted && f['gender'].errors" class="invalid-feedback">
-          <div *ngIf="f['gender'].errors['required']">gender is required</div>
+    
+        <div class="mb-3 row">
+          <div class="col-sm-2 ">
+            gender:
+          </div>
+          <div class="col-md-5 ">
+          <select name="gender" id="gender" formControlName="gender" class="form-select">
+            <option value="male">male</option>
+            <option value="female">female</option>
+          </select>
+          <div *ngIf="submitted && f['gender'].errors" class="invalid-feedback">
+            <div *ngIf="f['gender'].errors['required']">gender is required</div>
+          </div>
+          </div>
         </div>
-      </div>
+
+     
       <div class="mb-3 row">
         <label for="username" class="col-form-label col-sm-2">username:</label>
         <div class="col-md-5">
@@ -91,10 +97,10 @@
       </div>
       <br>
       <div class="mb-3 row">
-        <div class="col-md-1">
+        <div class="col-md-1 m-3">
           <button type="submit" class="btn btn-info">Register</button>
           </div>
-        <div class="col-md-1">
+        <div class="col-md-1 m-3">
           <button type="button" (click)="onReset()" class="btn btn-warning float-right">
             Reset
           </button>

@@ -215,3 +215,7 @@
     font-weight: 600;
     color: black;
 }
+.card-title{
+    color: black;
+    text-decoration: none;
+}
