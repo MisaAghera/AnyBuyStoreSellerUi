@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   showError: boolean | undefined;
 
-  constructor(private authService: AuthenticationService, 
-    private router: Router, 
+  constructor(private authService: AuthenticationService,
+    private router: Router,
     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
     this.loginForm.reset();
   }
   loginUser = (loginFormValue: any) => {
-    debugger
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
@@ -55,15 +54,21 @@ export class LoginComponent implements OnInit {
     var userForAuth: InModel = new InModel();
     userForAuth.In.username = login.username;
     userForAuth.In.password = login.password;
-
     this.authService.loginUser(userForAuth)
       .subscribe({
         next: (res: AuthResponseModel) => {
+          document.getElementById("success-alert")!.style.display = "block";
+          document.getElementById("danger-alert")!.style.display = "none";
+          document.getElementById("success-alert")!.innerHTML = "looged in successfully";
           localStorage.setItem("token", res.token);
+          localStorage.setItem("userId", res.userId.toString());
+          localStorage.setItem("userName",res.userName.toString());
           this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
           this.router.navigate([this.returnUrl]);
         },
         error: (err: HttpErrorResponse) => {
+          document.getElementById("danger-alert")!.style.display = "block";
+          document.getElementById("danger-alert")!.innerHTML = "either username or password incorrect";
           this.errorMessage = err.message;
           this.showError = true;
         }

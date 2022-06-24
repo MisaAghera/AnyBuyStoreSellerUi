@@ -14,7 +14,7 @@ export class ProductService {
   readonly getByIdUrl = GlobalConstants.apiURL+ 'Product/GetById/';
   readonly AddUrl = GlobalConstants.apiURL+ 'Product/Add';
   readonly getByUserUrl = GlobalConstants.apiURL + 'Product/GetAllByUSerId?UserId=';
-  
+  readonly updateUrl = GlobalConstants.apiURL + 'Product/Update/put';
 
   constructor(private http :HttpClient) { }
 
@@ -39,6 +39,10 @@ export class ProductService {
   
   add(body : InModelProduct){
     return this.http.post(this.AddUrl , body);
+  }
+
+  update(body :InModelProduct){
+    return this.http.put(this.updateUrl,body);
   }
 }
 

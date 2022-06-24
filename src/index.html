@@ -14,9 +14,31 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+<style>
+  
+</style>
 
 </head>
 <body>
-  <app-root></app-root>
+  <ejs-toast #toasttype id='toasttype' [position]="position" (created)="onCreate()" (close)="onclose($event)"
+  (beforeOpen)="onBeforeOpen()"></ejs-toast>
+<div id='toast_types'>
+  <app-root>
+    <div id='loader'>LOADING....</div>
+  </app-root>
+  <script id="template_toast_ele" type="text/x-template">
+    <div id='template_toast' style="display: none">
+        <div class="horizontal-align">
+            <div class='toast-content'>
+                <div class='toast-title'>
+                    Weekend Alarm
+                </div>
+                <div class='toast-message'> With traffic, its likely to take 45 minutes to get to jenny's 24th Birthday Bash at Hillside Bar, 454 E.
+                    Olive Way by 10:00PM </div>
+            </div>
+        </div>
+        <img src="https://ej2.syncfusion.com/demos/src/toast/resource/map.jpg" width="100%" height="70%">
+    </div>
+</script>
 </body>
 </html>

@@ -13,8 +13,10 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsComponent } from './products/products.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
-
-
+import { AuthInterceptorInterceptor } from './shared/interceptors/auth-interceptor.interceptor';
+import { ButtonModule, CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { ToastModule } from '@syncfusion/ej2-angular-notifications';
+import { ProductsingleComponent } from './productsingle/productsingle.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     LoginComponent,
     ProductCardComponent,
     ProductsComponent,
-
+    ProductsingleComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,14 +36,20 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
-
+    ToastModule,
+    ButtonModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorCatchingInterceptor,
       multi: true
-  }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
