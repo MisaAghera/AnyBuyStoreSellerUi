@@ -8,9 +8,13 @@ import { Observable } from 'rxjs';
 })
 export class CategoriesService {
   readonly GetUrl = GlobalConstants.apiURL+'ProductCategory/GetAll';
+  readonly GetBySubUrl = GlobalConstants.apiURL+'ProductCategory/GetBySubId?SubcategoryId=';
   constructor(private http :HttpClient) { }
   
   getAll(): Observable<Array<CategoryModel>>{
     return this.http.get<Array<CategoryModel>>(this.GetUrl);
+  }
+  getBySubCategoryId(subcategoryId:number):Observable<number>{
+    return this.http.get<number>(this.GetBySubUrl + subcategoryId);
   }
 }

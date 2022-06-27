@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../shared/services/products.service';
 import { ProductModel } from '../shared/models/product-model.model';
 import { AuthenticationService } from '../shared/services/authentication.service';
-
+import { DiscountModel } from '../shared/models/discount-model.model';
+import { DiscountsService } from '../shared/services/discounts.service';
 @Component({
   selector: 'app-productsingle',
   templateUrl: './productsingle.component.html',
@@ -11,36 +12,50 @@ import { AuthenticationService } from '../shared/services/authentication.service
 })
 export class ProductsingleComponent implements OnInit {
   ProductDetails: ProductModel = new ProductModel();
-  public isUserAuthenticated: boolean = false ;
+  DiscountDetails: DiscountModel = new DiscountModel();
+  public isUserAuthenticated: boolean = false;
+  public isValidProductOwner:boolean = false;
 
-  constructor(public authService: AuthenticationService,public route: ActivatedRoute, public ProductService: ProductService) { }
+  constructor(public authService: AuthenticationService,
+    public route: ActivatedRoute,
+    public ProductService: ProductService,
+    public DiscountService: DiscountsService) { }
 
-  getById(id: number): void {
-    this.ProductService.getById(id).subscribe(result => {
+  async getById(id: number): Promise<void> {
+   await this.ProductService.getById(id).subscribe(async result => {
       this.ProductDetails = result;
+      await this.getDiscountFunction(result);
+      await this.IsValidOwner(result);
     });
+
   }
 
-  onEditProduct(){
-     
+  async getDiscountFunction(result: ProductModel) {
+    await this.DiscountService.GetById(result.discountId!).subscribe(
+      res => {
+        this.DiscountDetails = res;
+      }
+    );
+  }
+
+  async IsValidOwner(result:ProductModel)
+  {
+    debugger
+    var userId  = Number(localStorage.getItem("userId"));
+     this.isValidProductOwner = result.userId==userId?true:false;
 
   }
 
   ngOnInit(): void {
-    //  this.value = this.authService.canActivate;
-     if (localStorage.getItem('authToken')!=null ||localStorage.getItem('authToken')!='') {    
-      this.isUserAuthenticated = true
-    }  
     
     this.authService.authChanged
-    .subscribe(res => {
-      this.isUserAuthenticated = res;
-    })
-    
+      .subscribe(res => {
+        this.isUserAuthenticated = res;
+      })
+
     this.route.paramMap.subscribe(params => {
       var id = Number(params.get('id'));
       this.getById(id);
     });
   }
-
 }

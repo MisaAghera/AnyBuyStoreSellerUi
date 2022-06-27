@@ -6,14 +6,15 @@ import { SignupComponent } from './signup/signup.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsingleComponent } from './productsingle/productsingle.component';
+import { AuthGuard } from './shared/services/auth-guard.guard';
 
 const routes: Routes = [
-  { path:"product/addEdit/:id", component:AddProductComponent },
+  { path:"product/addEdit/:id", component:AddProductComponent , canActivate: [AuthGuard] },
   { path:"login", component:LoginComponent },
   { path:"signup", component:SignupComponent },
-  { path:"products", component:ProductsComponent },
-  {path: "product-card",component:ProductCardComponent},
-  { path:"product/:id", component:ProductsingleComponent },
+  { path:"products", component:ProductsComponent, canActivate: [AuthGuard]  },
+  {path: "product-card",component:ProductCardComponent, canActivate: [AuthGuard] },
+  { path:"product/:id", component:ProductsingleComponent , canActivate: [AuthGuard] },
 ];
 
 @NgModule({

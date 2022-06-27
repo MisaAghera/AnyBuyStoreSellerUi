@@ -17,6 +17,7 @@ import { AuthInterceptorInterceptor } from './shared/interceptors/auth-intercept
 import { ButtonModule, CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
 import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 import { ProductsingleComponent } from './productsingle/productsingle.component';
+import { AuthGuard } from './shared/services/auth-guard.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,7 @@ import { ProductsingleComponent } from './productsingle/productsingle.component'
     ProductsingleComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, 
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -37,10 +38,12 @@ import { ProductsingleComponent } from './productsingle/productsingle.component'
     NgxPaginationModule,
     Ng2SearchPipeModule,
     ToastModule,
-    ButtonModule
+    ButtonModule,
+    
   ],
   providers: [
-    {
+    AuthGuard,
+    { 
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorCatchingInterceptor,
       multi: true

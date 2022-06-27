@@ -2,30 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthResponseModel } from '../shared/models/auth-response-model.model';
 import { UserForAuthenticationModel } from '../shared/models/user-for-authentication-model.model';
-import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
-
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   submitted = false;
-  private returnUrl: string | undefined;
+  returnUrl: string | undefined;
 
   loginForm: FormGroup = new FormGroup({
     username: new FormControl(""),
     password: new FormControl("")
   });
+  
   errorMessage: string = '';
   showError: boolean | undefined;
 
   constructor(private authService: AuthenticationService,
     private router: Router,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group(
@@ -34,7 +34,9 @@ export class LoginComponent implements OnInit {
         password: ['', [Validators.required]],
       }
     );
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
+
 
   get f(): { [key: string]: AbstractControl } {
     return this.loginForm.controls;
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
     this.submitted = false;
     this.loginForm.reset();
   }
+
   loginUser = (loginFormValue: any) => {
     this.submitted = true;
     if (this.loginForm.invalid) {
@@ -59,7 +62,7 @@ export class LoginComponent implements OnInit {
         next: (res: AuthResponseModel) => {
           document.getElementById("success-alert")!.style.display = "block";
           document.getElementById("danger-alert")!.style.display = "none";
-          document.getElementById("success-alert")!.innerHTML = "looged in successfully";
+          document.getElementById("success-alert")!.innerHTML = "logged in successfully";
           localStorage.setItem("token", res.token);
           localStorage.setItem("userId", res.userId.toString());
           localStorage.setItem("userName",res.userName.toString());
@@ -73,7 +76,6 @@ export class LoginComponent implements OnInit {
           this.showError = true;
         }
       })
-
   }
 }
 

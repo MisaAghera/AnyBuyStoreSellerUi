@@ -12,12 +12,12 @@
         </div>
 
       </div>
-    
-        <div class="mb-3 row">
-          <div class="col-sm-2 ">
-            gender:
-          </div>
-          <div class="col-md-5 ">
+
+      <div class="mb-3 row">
+        <div class="col-sm-2 ">
+          gender:
+        </div>
+        <div class="col-md-5 ">
           <select name="gender" id="gender" formControlName="gender" class="form-select">
             <option value="male">male</option>
             <option value="female">female</option>
@@ -25,10 +25,9 @@
           <div *ngIf="submitted && f['gender'].errors" class="invalid-feedback">
             <div *ngIf="f['gender'].errors['required']">gender is required</div>
           </div>
-          </div>
         </div>
+      </div>
 
-     
       <div class="mb-3 row">
         <label for="username" class="col-form-label col-sm-2">username:</label>
         <div class="col-md-5">
@@ -39,6 +38,7 @@
           </div>
         </div>
       </div>
+
       <div class="mb-3 row">
         <label for="email" class="col-form-label col-sm-2">Email:</label>
         <div class="col-md-5">
@@ -50,19 +50,22 @@
           </div>
         </div>
       </div>
+
       <div class="mb-3 row">
         <label for="phoneNumber" class="col-form-label col-sm-2">phone number:</label>
         <div class="col-md-5">
           <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
+            <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+              <div *ngIf="f['phoneNumber'].errors['required']">phoneNumber is required</div>
+              <div *ngIf="f['phoneNumber'].errors['pattern']">
+                phone number is not valid
+              </div>
+            </div>
         </div>
-        <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
-          <div *ngIf="f['phoneNumber'].errors['required']">phoneNumber is required</div>
-          <div *ngIf="f['phoneNumber'].errors['pattern']">
-            phone number is not valid
-          </div>
-        </div>
+      
       </div>
+
       <div class="mb-3 row">
         <label for="password" class="col-form-label col-sm-2">Password:</label>
         <div class="col-md-5">
@@ -78,8 +81,8 @@
             </div>
           </div>
         </div>
-
       </div>
+
       <div class="mb-3 row">
         <label for="confirmPassword" class="col-form-label col-sm-2">Confirm Password:</label>
         <div class="col-md-5">
@@ -95,17 +98,17 @@
           </div>
         </div>
       </div>
+
       <br>
       <div class="mb-3 row">
         <div class="col-md-1 m-3">
           <button type="submit" class="btn btn-info">Register</button>
-          </div>
+        </div>
         <div class="col-md-1 m-3">
           <button type="button" (click)="onReset()" class="btn btn-warning float-right">
             Reset
           </button>
         </div>
-
       </div>
     </form>
   </div>

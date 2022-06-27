@@ -37,7 +37,7 @@ export class ProductsComponent implements OnInit {
   }
 
   getProductsByUserId(): void {
-    var UserId = 1;
+    var UserId = Number(localStorage.getItem('userId'));
     this.service.getAllByUserId(UserId).subscribe(result => {
       this.ProductList = result;
     });

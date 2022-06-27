@@ -17,4 +17,17 @@ export  class CustomValidation {
       }
     };
   }
+
+
+  static restrictZeroValue(controlName: string): ValidatorFn {
+    return (controls: AbstractControl) => {
+      const control = controls.get(controlName);
+      if (control?.value =='0') {
+        controls.get(controlName)?.setErrors({ response: true });
+        return { response: true };
+      } else {
+        return null;
+      }
+    };
+  }
 }

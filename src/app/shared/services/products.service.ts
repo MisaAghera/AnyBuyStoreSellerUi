@@ -30,7 +30,7 @@ export class ProductService {
   }
 
   getById(ProductId: number): Observable<ProductModel> {
-    return this.http.get<ProductModel>(this.getByIdUrl+ProductId)  
+    return this.http.get<ProductModel>(this.getByIdUrl+ProductId) 
   }
 
   getByUserId(UserId: number): Observable<ProductModel> {

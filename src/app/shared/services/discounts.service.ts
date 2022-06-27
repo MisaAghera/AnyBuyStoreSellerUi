@@ -9,10 +9,16 @@ import { Observable } from 'rxjs';
 })
 export class DiscountsService {
   readonly GetUrl = GlobalConstants.apiURL+'Discount/GetAll';
+  readonly GetByIdUrl = GlobalConstants.apiURL+'Discount/GetById/';
   constructor(private http :HttpClient) { }
   
   getAll(): Observable<Array<DiscountModel>>{
     return this.http.get<Array<DiscountModel>>(this.GetUrl);
+  }
+
+
+  GetById(discountId:number):Observable<DiscountModel>{
+    return this.http.get<DiscountModel>(this.GetByIdUrl+discountId);
   }
 }
 
