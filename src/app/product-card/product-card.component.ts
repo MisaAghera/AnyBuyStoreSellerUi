@@ -24,6 +24,9 @@ export class ProductCardComponent implements OnInit {
         }
       );
     }
+    public createImgPath = (serverPath: string) => { 
+      return `https://localhost:7249/${serverPath}`; 
+    }
 
   ngOnInit(): void {
     this.Product;

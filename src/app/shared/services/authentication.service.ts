@@ -29,7 +29,6 @@ export class AuthenticationService {
   }
 
   checkIfAuthenticated(){
-    debugger
     let token = localStorage.getItem('token')?.toString();
     if(token ==''|| token==null){
       this.sendAuthStateChangeNotification(false);

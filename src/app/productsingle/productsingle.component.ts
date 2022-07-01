@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../shared/services/products.service';
 import { ProductModel } from '../shared/models/product-model.model';
 import { AuthenticationService } from '../shared/services/authentication.service';
@@ -19,7 +19,8 @@ export class ProductsingleComponent implements OnInit {
   constructor(public authService: AuthenticationService,
     public route: ActivatedRoute,
     public ProductService: ProductService,
-    public DiscountService: DiscountsService) { }
+    public DiscountService: DiscountsService,
+    private router: Router) { }
 
   async getById(id: number): Promise<void> {
    await this.ProductService.getById(id).subscribe(async result => {
@@ -27,23 +28,31 @@ export class ProductsingleComponent implements OnInit {
       await this.getDiscountFunction(result);
       await this.IsValidOwner(result);
     });
-
   }
 
   async getDiscountFunction(result: ProductModel) {
-    await this.DiscountService.GetById(result.discountId!).subscribe(
+     await this.DiscountService.GetById(result.discountId!).subscribe(
       res => {
         this.DiscountDetails = res;
       }
     );
   }
 
+  async onDeleteProduct(productId:number){
+await this.ProductService.delete(productId).subscribe(
+  res=>{
+    alert("deleted successfully");
+    this.router.navigate(['/products']);
+  }
+)
+
+  }
+
   async IsValidOwner(result:ProductModel)
   {
-    debugger
     var userId  = Number(localStorage.getItem("userId"));
      this.isValidProductOwner = result.userId==userId?true:false;
-
+     
   }
 
   ngOnInit(): void {

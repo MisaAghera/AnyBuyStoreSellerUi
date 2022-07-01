@@ -27,11 +27,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
     this.authService.checkIfAuthenticated();
     this.authService.authChanged
       .subscribe(async res => {
-        debugger
         await this.assignAuthentication(res);
         this.userName = localStorage.getItem("userName") ? localStorage.getItem("userName")?.toString() : '';
       })

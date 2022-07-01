@@ -6,9 +6,6 @@
         <label for="age" class="col-form-label col-sm-2">age:</label>
         <div class="col-md-5">
           <input type="number" id="age" formControlName="age" class="form-control" min="1" />
-          <div *ngIf="submitted && f['age'].errors" class="invalid-feedback">
-            <div *ngIf="f['age'].errors['required']">age is required</div>
-          </div>
         </div>
 
       </div>
@@ -22,9 +19,6 @@
             <option value="male">male</option>
             <option value="female">female</option>
           </select>
-          <div *ngIf="submitted && f['gender'].errors" class="invalid-feedback">
-            <div *ngIf="f['gender'].errors['required']">gender is required</div>
-          </div>
         </div>
       </div>
 
@@ -113,46 +107,3 @@
     </form>
   </div>
 </div>
-
-
-
-
-
-
-
-<!-- <div class="account section">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <div class="login-form border p-5">
-              <div class="text-center heading">
-                <h2 class="mb-2">Sign Up</h2>
-                <p class="lead">Already have an account? <a routerLink="/login"> Login now</a></p>
-              </div>
-    
-              <form action="#">
-                <div class="form-group mb-4">
-                  <label for="#">Enter Email Address</label>
-                  <input type="text" class="form-control" placeholder="Enter Email Address">
-                </div>
-                <div class="form-group mb-4">
-                  <label for="#">Enter username</label>
-                  <a class="float-right" href="">Forget password?</a>
-                  <input type="text" class="form-control" placeholder="Enter Password"> 
-                </div>
-                <div class="form-group mb-4">
-                  <label for="#">Enter Password</label>
-                  <input type="text" class="form-control" placeholder="Enter Password"> 
-                </div>
-                <div class="form-group">
-                  <label for="#">Confirm Password</label>
-                  <input type="text" class="form-control" placeholder="Confirm Password"> 
-                </div>
-    
-                <a href="#" class="btn btn-main mt-3 btn-block">Signup</a>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->

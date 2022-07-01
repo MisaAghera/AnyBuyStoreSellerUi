@@ -14,9 +14,9 @@ export class ProductModel {
 
     brand: string = '';
 
-    //productImg? : any ; 
+    productImg? : any ; 
 
-    imageUrl: string = '';
+    imageUrl?: string = '';
 
     quantity: number = 0;
 

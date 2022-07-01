@@ -24,9 +24,8 @@ export class AddProductComponent implements OnInit {
   Categorylist?: CategoryModel[];
   SubcategoryList?: SubcategoryModel[];
   DiscountList?: DiscountModel[];
-  file: any;
   public isUserAuthenticated: boolean = false;
-  //selectedFile?: File;
+  selectedFile?: File;
 
   newProductForm: FormGroup = new FormGroup({
     productId: new FormControl(''),
@@ -37,7 +36,7 @@ export class AddProductComponent implements OnInit {
       price: new FormControl(''),
       brand: new FormControl(''),
       quantity: new FormControl(''),
-      //formFileImg: new FormControl(''),
+      productImg: new FormControl(''),
   });
   productId: number = 0;
   submitted: boolean = false;
@@ -75,7 +74,7 @@ export class AddProductComponent implements OnInit {
   }
 
   async onFileChanged(e: any) {
-    this.file = e.target.files[0];
+    this.selectedFile = <File>e.target.files[0];;
   }
 
   async onSubmit(formValues: any) {
@@ -83,31 +82,57 @@ export class AddProductComponent implements OnInit {
     if (this.newProductForm.invalid) {
       return;
     }
+
     const formValue = { ...formValues };
-
-    var productDetails: InModel = new InModel();
-    productDetails.In.brand = formValue.brand;
-    productDetails.In.description = formValue.productDescription;
-    productDetails.In.discountId = formValue.discount;
-    productDetails.In.name = formValue.productName;
-    productDetails.In.price = formValue.price;
-    productDetails.In.productSubcategoryId = formValue.subcategory;
-    productDetails.In.quantity = formValue.quantity;
-    productDetails.In.imageUrl = 'img.jpg';
-    // productDetails.In.productImg = this.file;
-    productDetails.In.userId = Number(localStorage.getItem("userId"));
-
-    if (this.productId == 0 || this.productId == null) {
-      await this.ProductService.add(productDetails).subscribe({
-        next: (_) => console.log("Successfully added"),
-        error: (err: HttpErrorResponse) => console.log(err.error.errors)
+    const formData = new FormData();
+    formData.append('brand',formValue.brand);
+    formData.append('description', formValue.productDescription);
+    formData.append('discountId',  formValue.discount);
+    formData.append('name', formValue.productName);
+    formData.append('price',formValue.price);
+    formData.append('productSubcategoryId',  formValue.subcategory);
+    formData.append('quantity', formValue.quantity);
+    formData.append('productImg', this.selectedFile!);
+    let userid = localStorage.getItem("userId") ;
+    formData.append('userId',userid!);
+debugger
+    // var productDetails: ProductModel = new ProductModel();
+    // productDetails.brand = formValue.brand;
+    // productDetails.description = formValue.productDescription;
+    // productDetails.discountId = formValue.discount;
+    // productDetails.name = formValue.productName;
+    // productDetails.price = formValue.price;
+    // productDetails.productSubcategoryId = formValue.subcategory;
+    // productDetails.quantity = formValue.quantity;
+    // productDetails.imageUrl = 'img.jpg';
+    // productDetails.productImg = this.selectedFile!;
+    // productDetails.userId = Number(localStorage.getItem("userId"));
+    if (this.productId == 0 || this.productId == null  ) {
+     debugger
+      await this.ProductService.add(formData).subscribe({
+        next: (_) => {
+          document.getElementById("success-alert")!.style.display = "block";
+          document.getElementById("danger-alert")!.style.display = "none";
+          document.getElementById("success-alert")!.innerHTML = "added successfully";
+        },
+        error: (err: HttpErrorResponse) =>  {
+           document.getElementById("danger-alert")!.style.display = "block";
+        document.getElementById("danger-alert")!.innerHTML = "something went wrong";}
       })
     }
     else {
-      productDetails.In.id = Number(this.productId);
-      await this.ProductService.update(productDetails).subscribe({
-        next: (_) => console.log("Successfully updated"),
-        error: (err: HttpErrorResponse) => console.log(err.error.errors)
+      let productid = this.productId.toString();
+      formData.append('id', productid);
+      // productDetails.id = Number(this.productId);
+      await this.ProductService.update(formData).subscribe({
+        next: (_) =>{
+          document.getElementById("success-alert")!.style.display = "block";
+          document.getElementById("danger-alert")!.style.display = "none";
+          document.getElementById("success-alert")!.innerHTML = "updated successfully";
+        },
+        error: (err: HttpErrorResponse) =>  {
+           document.getElementById("danger-alert")!.style.display = "block";
+        document.getElementById("danger-alert")!.innerHTML = "something went wrong";}
       })
     }
   }
@@ -129,6 +154,7 @@ export class AddProductComponent implements OnInit {
     this.newProductForm.controls["price"].setValue(res.price);
     this.newProductForm.controls["brand"].setValue(res.brand);
     this.newProductForm.controls["quantity"].setValue(res.quantity);
+    
     this.productId = res.id;
   }
 
@@ -147,14 +173,15 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
 
     this.newProductForm = this.formBuilder.group({
-      productId:  ['', [Validators.required]],
-      subcategory: ['', [Validators.required,CustomValidation.restrictZeroValue('subcategory')]],
+      productId:  [''],
+      subcategory: ['', [Validators.required]],
       discount:  [''],
       productName:  ['', [Validators.required]],
       productDescription:  ['', [Validators.required]],
       price:  ['', [Validators.required]],
       brand:  ['', [Validators.required]],
       quantity:  ['', [Validators.required]],
+      productImg:['',[Validators.required]]
       //formFileImg: new FormControl(''),
     });
     this.authService.authChanged
@@ -179,10 +206,8 @@ export class AddProductComponent implements OnInit {
     this.submitted = false;
     this.newProductForm.reset();
   }
-
 }
 
-
-class InModel {
-  In: ProductModel = new ProductModel();
-}
+// class InModel {
+//   In: ProductModel = new ProductModel();
+// }

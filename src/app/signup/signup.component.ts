@@ -29,8 +29,8 @@ export class SignupComponent implements OnInit {
     this.registerForm = this.formBuilder.group(
       {
         username: ['', [Validators.required]],
-        age: ['', [Validators.required]],
-        gender: ['', [Validators.required]],
+        age: [''],
+        gender: [''],
         phoneNumber: [
           '',
           [
@@ -62,7 +62,7 @@ export class SignupComponent implements OnInit {
 
 
   registerUser = (registerFormValue: any) => {
-   
+   debugger
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
@@ -71,12 +71,15 @@ export class SignupComponent implements OnInit {
     var userForRegister: InModel = new InModel();
     userForRegister.In.username = formValues.username;
     userForRegister.In.password = formValues.password;
-    userForRegister.In.age = formValues.age;
-    userForRegister.In.gender = formValues.gender;
     userForRegister.In.confirmPassword = formValues.confirmPassword;
     userForRegister.In.email = formValues.email;
     userForRegister.In.phoneNumber = formValues.phoneNumber;
-  
+
+    if(formValues.age!='')
+    userForRegister.In.age = formValues.age;
+    if(formValues.gender!='' &&formValues.gender!=null )
+      userForRegister.In.gender = formValues.gender;
+  debugger
     this.authService.registerUser(userForRegister)
       .subscribe({
         next: (_) => console.log("Successful registration"),

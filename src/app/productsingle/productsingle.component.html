@@ -69,5 +69,6 @@
 <!-- <div *ngIf= "isUserAuthenticated"> -->
     <div *ngIf= "isValidProductOwner==true">
         <a class="btn btn-secondary float-right" routerLink="../addEdit/{{ProductDetails?.id}}">Edit Product</a>
+        <button type="button" class="btn btn-danger" (click)= "onDeleteProduct(ProductDetails!.id)">delete</button>
     </div>
 <!-- </div> -->

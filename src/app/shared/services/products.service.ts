@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ProductModel } from '../models/product-model.model'; 
-import {HttpClient} from '@angular/common/http';
+import { ProductModel } from '../models/product-model.model';
+import { HttpClient } from '@angular/common/http';
 import { GlobalConstants } from '../global-constants.model';
 import { Observable } from 'rxjs';
 @Injectable({
@@ -9,43 +9,46 @@ import { Observable } from 'rxjs';
 export class ProductService {
   formData: ProductModel = new ProductModel();
 
-  readonly baseURLGet = GlobalConstants.apiURL+'Product/GetAll';
-  readonly getBySubIdUrl = GlobalConstants.apiURL+'Product/GetAllBySubId?SubcategoryId=';
-  readonly getByIdUrl = GlobalConstants.apiURL+ 'Product/GetById/';
-  readonly AddUrl = GlobalConstants.apiURL+ 'Product/Add';
+  readonly baseURLGet = GlobalConstants.apiURL + 'Product/GetAll';
+  readonly getBySubIdUrl = GlobalConstants.apiURL + 'Product/GetAllBySubId?SubcategoryId=';
+  readonly getByIdUrl = GlobalConstants.apiURL + 'Product/GetById/';
+  readonly AddUrl = GlobalConstants.apiURL + 'Product/Add';
   readonly getByUserUrl = GlobalConstants.apiURL + 'Product/GetAllByUSerId?UserId=';
   readonly updateUrl = GlobalConstants.apiURL + 'Product/Update/put';
+  readonly deleteUrl = GlobalConstants.apiURL + 'Product/Delete/';
+  constructor(private http: HttpClient) { }
 
-  constructor(private http :HttpClient) { }
-
-  getAll() : Observable<Array<ProductModel>>{
+  getAll(): Observable<Array<ProductModel>> {
     return this.http.get<Array<ProductModel>>(this.baseURLGet)
   }
 
   getAllBySubcategoryId(SubcategoryId: number): Observable<Array<ProductModel>> {
-    return this.http.get<Array<ProductModel>>(this.getBySubIdUrl+SubcategoryId)  
+    return this.http.get<Array<ProductModel>>(this.getBySubIdUrl + SubcategoryId)
   }
   getAllByUserId(UserId: number): Observable<Array<ProductModel>> {
-    return this.http.get<Array<ProductModel>>(this.getByUserUrl+UserId)  
+    return this.http.get<Array<ProductModel>>(this.getByUserUrl + UserId)
   }
 
   getById(ProductId: number): Observable<ProductModel> {
-    return this.http.get<ProductModel>(this.getByIdUrl+ProductId) 
+    return this.http.get<ProductModel>(this.getByIdUrl + ProductId)
   }
 
-  getByUserId(UserId: number): Observable<ProductModel> {
-    return this.http.get<ProductModel>(this.getByIdUrl+UserId)  
-  }
-  
-  add(body : InModelProduct){
-    return this.http.post(this.AddUrl , body);
+
+  add(body: any) {
+    return this.http.post(this.AddUrl, body);
   }
 
-  update(body :InModelProduct){
-    return this.http.put(this.updateUrl,body);
+  update(body: any) {
+    return this.http.put(this.updateUrl, body);
+  }
+
+ 
+
+  delete(id: number) {
+    return this.http.delete(this.deleteUrl + id);
   }
 }
 
-class InModelProduct{
+class InModelProduct {
   In: ProductModel = new ProductModel();
 }
