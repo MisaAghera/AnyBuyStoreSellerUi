@@ -18,6 +18,8 @@ import { ButtonModule, CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2
 import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 import { ProductsingleComponent } from './productsingle/productsingle.component';
 import { AuthGuard } from './shared/services/auth-guard.guard';
+import { NgxPopper } from 'angular-popper';
+import { OrdersComponent } from './orders/orders.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +30,7 @@ import { AuthGuard } from './shared/services/auth-guard.guard';
     ProductCardComponent,
     ProductsComponent,
     ProductsingleComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule, 
@@ -39,6 +42,7 @@ import { AuthGuard } from './shared/services/auth-guard.guard';
     Ng2SearchPipeModule,
     ToastModule,
     ButtonModule,
+    NgxPopper
     
   ],
   providers: [

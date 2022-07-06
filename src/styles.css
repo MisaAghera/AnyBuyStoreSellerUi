@@ -114,3 +114,14 @@ body>#element .e-toast {
   text-align: center;
 }
 /* csslint ignore:end */
+@import "~bootstrap/dist/css/bootstrap.css";
+button{
+    cursor: pointer;
+}
+.dropdown-menu{
+    cursor: pointer;
+}
+.card-style{
+    border: none;
+    width: 400px;
+}

@@ -74,15 +74,15 @@ export class AddProductComponent implements OnInit {
   }
 
   async onFileChanged(e: any) {
-    this.selectedFile = <File>e.target.files[0];;
+    this.selectedFile = <File>e.target.files[0];
   }
 
   async onSubmit(formValues: any) {
+    console.log(this.newProductForm)
     this.submitted = true;
     if (this.newProductForm.invalid) {
       return;
     }
-
     const formValue = { ...formValues };
     const formData = new FormData();
     formData.append('brand',formValue.brand);
@@ -92,23 +92,16 @@ export class AddProductComponent implements OnInit {
     formData.append('price',formValue.price);
     formData.append('productSubcategoryId',  formValue.subcategory);
     formData.append('quantity', formValue.quantity);
-    formData.append('productImg', this.selectedFile!);
+    if(this.selectedFile){
+      formData.append('productImg', this.selectedFile!);
+    }else{
+      formData.append('productImg', null!);
+    }
     let userid = localStorage.getItem("userId") ;
     formData.append('userId',userid!);
-debugger
-    // var productDetails: ProductModel = new ProductModel();
-    // productDetails.brand = formValue.brand;
-    // productDetails.description = formValue.productDescription;
-    // productDetails.discountId = formValue.discount;
-    // productDetails.name = formValue.productName;
-    // productDetails.price = formValue.price;
-    // productDetails.productSubcategoryId = formValue.subcategory;
-    // productDetails.quantity = formValue.quantity;
-    // productDetails.imageUrl = 'img.jpg';
-    // productDetails.productImg = this.selectedFile!;
-    // productDetails.userId = Number(localStorage.getItem("userId"));
+
+    
     if (this.productId == 0 || this.productId == null  ) {
-     debugger
       await this.ProductService.add(formData).subscribe({
         next: (_) => {
           document.getElementById("success-alert")!.style.display = "block";
@@ -123,7 +116,6 @@ debugger
     else {
       let productid = this.productId.toString();
       formData.append('id', productid);
-      // productDetails.id = Number(this.productId);
       await this.ProductService.update(formData).subscribe({
         next: (_) =>{
           document.getElementById("success-alert")!.style.display = "block";
@@ -154,8 +146,8 @@ debugger
     this.newProductForm.controls["price"].setValue(res.price);
     this.newProductForm.controls["brand"].setValue(res.brand);
     this.newProductForm.controls["quantity"].setValue(res.quantity);
-    
     this.productId = res.id;
+   
   }
 
   async initialValues(productId: number) {
@@ -168,7 +160,6 @@ debugger
     )
   }
 
-  
  
   ngOnInit(): void {
 
@@ -181,9 +172,9 @@ debugger
       price:  ['', [Validators.required]],
       brand:  ['', [Validators.required]],
       quantity:  ['', [Validators.required]],
-      productImg:['',[Validators.required]]
-      //formFileImg: new FormControl(''),
+      productImg:['']
     });
+    
     this.authService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
@@ -195,7 +186,13 @@ debugger
 
     this.route.paramMap.subscribe(params => {
       var productId = Number(params.get('id'));
+      this.productId = productId;
+      if(this.productId==0){
+        this.newProductForm.get('productImg')?.setValidators([Validators.required]);
+        this.newProductForm.get('productImg')?.updateValueAndValidity();
+      }
       this.initialValues(productId);
+
     });
   }
   get f(): { [key: string]: AbstractControl } {

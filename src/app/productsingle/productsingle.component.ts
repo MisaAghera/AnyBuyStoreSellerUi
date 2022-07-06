@@ -5,6 +5,7 @@ import { ProductModel } from '../shared/models/product-model.model';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { DiscountModel } from '../shared/models/discount-model.model';
 import { DiscountsService } from '../shared/services/discounts.service';
+import { GlobalConstants } from '../shared/global-constants.model';
 @Component({
   selector: 'app-productsingle',
   templateUrl: './productsingle.component.html',
@@ -14,7 +15,7 @@ export class ProductsingleComponent implements OnInit {
   ProductDetails: ProductModel = new ProductModel();
   DiscountDetails: DiscountModel = new DiscountModel();
   public isUserAuthenticated: boolean = false;
-  public isValidProductOwner:boolean = false;
+  public isValidProductOwner: boolean = false;
 
   constructor(public authService: AuthenticationService,
     public route: ActivatedRoute,
@@ -23,40 +24,43 @@ export class ProductsingleComponent implements OnInit {
     private router: Router) { }
 
   async getById(id: number): Promise<void> {
-   await this.ProductService.getById(id).subscribe(async result => {
+    await this.ProductService.getById(id).subscribe(async result => {
       this.ProductDetails = result;
       await this.getDiscountFunction(result);
       await this.IsValidOwner(result);
     });
   }
 
+  
   async getDiscountFunction(result: ProductModel) {
-     await this.DiscountService.GetById(result.discountId!).subscribe(
+    await this.DiscountService.GetById(result.discountId!).subscribe(
       res => {
         this.DiscountDetails = res;
       }
     );
   }
 
-  async onDeleteProduct(productId:number){
-await this.ProductService.delete(productId).subscribe(
-  res=>{
-    alert("deleted successfully");
-    this.router.navigate(['/products']);
-  }
-)
-
-  }
-
-  async IsValidOwner(result:ProductModel)
-  {
-    var userId  = Number(localStorage.getItem("userId"));
-     this.isValidProductOwner = result.userId==userId?true:false;
-     
+  async onDeleteProduct(productId: number) {
+    await this.ProductService.delete(productId).subscribe(
+      res => {
+        alert("deleted successfully");
+        this.router.navigate(['/products']);
+      }
+    )
   }
 
+  async IsValidOwner(result: ProductModel) {
+    var userId = Number(localStorage.getItem("userId"));
+    this.isValidProductOwner = result.userId == userId ? true : false;
+
+  }
+  
+  createImgPath(serverpath: string) {
+    return GlobalConstants.apiURL + serverpath;
+  }
+  
   ngOnInit(): void {
-    
+
     this.authService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;

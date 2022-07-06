@@ -62,7 +62,6 @@ export class SignupComponent implements OnInit {
 
 
   registerUser = (registerFormValue: any) => {
-   debugger
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
@@ -79,7 +78,6 @@ export class SignupComponent implements OnInit {
     userForRegister.In.age = formValues.age;
     if(formValues.gender!='' &&formValues.gender!=null )
       userForRegister.In.gender = formValues.gender;
-  debugger
     this.authService.registerUser(userForRegister)
       .subscribe({
         next: (_) => console.log("Successful registration"),

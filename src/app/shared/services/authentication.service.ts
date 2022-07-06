@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
 
   formDataLogin: UserForAuthenticationModel = new UserForAuthenticationModel();
-  readonly LoginUrl = GlobalConstants.apiURL + 'Authenticate/Login';
+  readonly LoginUrl = GlobalConstants.apiURL + 'Authenticate/LoginSeller';
   readonly RegisterUrl = GlobalConstants.apiURL + 'Authenticate/RegisterSeller';
   private authChangeSub: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public authChanged: Observable<boolean> = this.authChangeSub.asObservable();

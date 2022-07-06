@@ -19,7 +19,7 @@
       <div class="mb-3 row">
         <label for="password" class="col-form-label col-sm-2">Password:</label>
         <div class="col-md-5">
-          <input type="text" id="password" formControlName="password" class="form-control"
+          <input type="password" id="password" formControlName="password" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
           <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
             <div *ngIf="f['password'].errors['required']">password is required</div>
@@ -40,31 +40,3 @@
     </form>
   </div>
 </div>
-<!-- <div class="account section">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <div class="login-form border p-5">
-              <div class="text-center heading">
-                <h2 class="mb-2">Login</h2>
-                <p class="lead">Don’t have an account? <a href="#">Create a free account</a></p>
-              </div>
-    
-              <form action="#">
-                <div class="form-group mb-4">
-                  <label for="#">Enter username</label>
-                  <input type="text" class="form-control" placeholder="Enter Username">
-                </div>
-                <div class="form-group">
-                  <label for="#">Enter Password</label>
-                  <a class="float-right" href="">Forget password?</a>
-                  <input type="text" class="form-control" placeholder="Enter Password"> 
-                </div>
-    
-                <a href="#" class="btn btn-main mt-3 btn-block">Login</a>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->

@@ -1,14 +1,15 @@
-<div class="custom-style">
-  <div class="container">
-    <div class="row">
+
+<div class="container " style="padding-top:80px ;padding-left: 250px;">
+  <div class="row">
+    <div class="col-sm-1">
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+        <button class="dropdown-toggle button-style" type="button" id="dropdownMenu1" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          Sort by
+          <i class="fa fa-sort icon-style"></i>
         </button>
         <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
           <li class="dropdown-submenu">
-            <a class="dropdown-item" tabindex="-1" >price</a>
+            <a class="dropdown-item" tabindex="-1">price</a>
             <ul class="dropdown-menu">
               <li class="dropdown-item"><a tabindex="-1" (click)="OnClickPriceHighToLow()">high to low</a></li>
               <li class="dropdown-item"><a tabindex="-1" (click)="OnClickPriceLowToHigh()">low to high</a></li>
@@ -23,13 +24,14 @@
           </li>
         </ul>
       </div>
+    </div>
+    <div class="col-sm-1">
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+        <button class="dropdown-toggle button-style" type="button" id="dropdownMenu1" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          filters
+          <i class="fa fa-filter icon-style"></i>
         </button>
         <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-          <li class="dropdown-divider"></li>
           <li class="dropdown-submenu">
             <a class="dropdown-item" tabindex="-1">category</a>
             <ul class="dropdown-menu">
@@ -46,45 +48,45 @@
               </div>
             </ul>
           </li>
+          <li class="dropdown-submenu">
+            <a class="dropdown-item" tabindex="-1">discount</a>
+            <ul class="dropdown-menu">
+              <div *ngFor="let discount of DiscountList">
+                <li class="dropdown-item"><a (click)="getProductsByDiscount(discount.id)">{{discount.value}}</a>
+                </li>
+              </div>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
-  <button class="btn btn-secondary float-right" (click)= "getProducts()">remove filters</button>
-  <button class="btn btn-secondary float-right" (click)= "getProductsByUserId()">my products</button>
-  </div>
-  <div class="container mt-5">
-    <div class="form-group">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search..."
-        [(ngModel)]="filterTerm"
-      />
+    <div class="col-sm-1">
+      <button class="button-style " (click)="getProducts()"><i class="fa fa-close icon-style"></i></button>
     </div>
-
-  <!-- <h3 class="card-header">Angular 10 Pagination Example</h3> -->
+    <div class="float-right mb-3">
+      <button class="btn btn-secondary float-right" (click)="getProductsByUserId()">my products</button>
+    </div>
+  </div>
+</div>
+<div class="container " style="padding-top:0px ;padding-left: 250px;padding-right: 0%;">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filterTerm" />
+  </div>
   <div class="card-body">
     <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
       <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
-        <app-product-card *ngFor= "let product of ProductList | filter: filterTerm | paginate
+        <app-product-card *ngFor="let product of ProductList | filter: filterTerm | paginate
         : {
             itemsPerPage: tableSize,
             currentPage: page,
             totalItems: count
           };
-    let i = index" [Product]='product'></app-product-card>
+        let i = index" [Product]='product'></app-product-card>
       </div>
     </div>
   </div>
-  <!-- <div class="card-footer pb-0 pt-3">
-        <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
-    </div> -->
-    <div class="d-flex justify-content-center">
-      <pagination-controls
-        previousLabel="Prev"
-        nextLabel="Next"
-        (pageChange)="onTableDataChange($event)"
-      >
-      </pagination-controls>
-    </div>
+  <div class="d-flex justify-content-center">
+    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+  </div>
 </div>

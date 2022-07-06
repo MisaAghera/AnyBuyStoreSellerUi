@@ -1,8 +1,7 @@
 <a routerLink="/product/{{Product?.id}}">
     <div class="col hp">
         <div class="card h-100 shadow-sm">
-            <img ng-src="Resources/ProfilePics/19_34.png" class="card-img-top"
-                alt="product.title" />
+            <img class="img-fluid" [src]="createImgPath(Product!.imageUrl!)" class="card-img-top" alt="product picture"> 
             <div class="label-top shadow-sm">
                 <a id="product-company">{{Product?.brand}}</a>
             </div>
@@ -21,3 +20,6 @@
         </div>
     </div>
 </a>
+
+
+

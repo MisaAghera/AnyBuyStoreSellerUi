@@ -1,5 +1,5 @@
 export class DiscountModel {
     id :number =0;
     type :string = '';
-    value :string = '';
+    value :number = 0;
 }

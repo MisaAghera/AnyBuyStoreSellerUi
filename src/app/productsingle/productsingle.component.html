@@ -15,46 +15,31 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <div class="single-product-slider">
+                <div class="single-product-slider" style="margin-top: 60px;">
                     <div class="carousel slide" data-ride="carousel" id="single-product-slider">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="assets/images/product-3.jpg" alt="" class="img-fluid">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/images/product-2.jpg" alt="" class="img-fluid">
-                            </div>
-                            <div class="carousel-item ">
-                                <img src="assets/images/product-1.jpg" alt="" class="img-fluid">
+                                <img class="img-fluid" [src]="createImgPath(ProductDetails!.imageUrl!)"
+                                    class="card-img-top" alt="product picture">
                             </div>
                         </div>
-
-                        <ol class="carousel-indicators">
-                            <li data-target="#single-product-slider" data-slide-to="0" class="active">
-                                <img src="assets/images/product-3.jpg" alt="" class="img-fluid">
-                            </li>
-                            <li data-target="#single-product-slider" data-slide-to="1">
-                                <img src="assets/images/product-2.jpg" alt="" class="img-fluid">
-                            </li>
-                            <li data-target="#single-product-slider" data-slide-to="2">
-                                <img src="assets/images/product-1.jpg" alt="" class="img-fluid">
-                            </li>
-                        </ol>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-7">
+            <div class="col-md-7" style="margin-top:2%;">
                 <div class="single-product-details mt-5 mt-lg-0">
                     <h2>{{ProductDetails.name}}</h2>
                     <hr>
+                    <h6 class="product-price"><del>{{(DiscountDetails.value+ProductDetails.price)| currency:
+                            'INR'}}</del></h6>
 
                     <h3 class="product-price">{{ProductDetails.price | currency: 'INR' }} </h3>
                     <h5>{{DiscountDetails.value| currency: 'INR'}} OFF</h5>
                     <p class="product-description my-4 ">
                         {{ProductDetails.description}}
                     </p>
-                
+
                     <div class="products-meta mt-4">
                         <div class="product-category d-flex align-items-center">
                             <span class="font-weight-bold text-capitalize product-meta-title">brand :</span>
@@ -66,9 +51,10 @@
         </div>
     </div>
 </section>
-<!-- <div *ngIf= "isUserAuthenticated"> -->
-    <div *ngIf= "isValidProductOwner==true">
-        <a class="btn btn-secondary float-right" routerLink="../addEdit/{{ProductDetails?.id}}">Edit Product</a>
-        <button type="button" class="btn btn-danger" (click)= "onDeleteProduct(ProductDetails!.id)">delete</button>
+
+<div *ngIf="isValidProductOwner==true">
+    <div class="container mt-5">
+        <a class="btn btn-secondary mr-3" routerLink="../addEdit/{{ProductDetails?.id}}">Edit Product</a>
+        <button type="button" class="btn btn-danger" (click)="onDeleteProduct(ProductDetails!.id)">delete</button>
     </div>
-<!-- </div> -->
+</div>
