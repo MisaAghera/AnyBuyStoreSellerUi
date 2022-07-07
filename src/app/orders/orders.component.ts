@@ -22,7 +22,8 @@ export class OrdersComponent implements OnInit {
   tableSize: number = 8;
   tableSizes: any = [3, 6, 9, 12];
   discountValue?:number;
-
+  userId:number=0;
+  netProfit:number=0;
   newOrderDetailsForm: FormGroup = new FormGroup({
     id: new FormControl(''),
     productId: new FormControl(''),
@@ -33,6 +34,21 @@ export class OrdersComponent implements OnInit {
     price: new FormControl(''),
   });
 
+  YearForm: FormGroup = new FormGroup({
+    year: new FormControl(''),
+  });
+
+
+  onSubmitFilterByYear(Year:string){
+
+    var year = Number(Year); 
+    this.OrderDetailsService.GetAllOrderDetailsOfMyProductsByYear(this.userId,year).subscribe(res=>{
+      this.OrderDetailsList = res;
+    })
+    this.OrderDetailsService.GetTotalProfitOfMyProductsOfThisYear(this.userId,year).subscribe(res=>{
+      this.netProfit = res;
+    })
+  }
 
   addValidaiton(){
     this.newOrderDetailsForm = this.formBuilder.group({
@@ -99,6 +115,20 @@ debugger
     this.OrderDetailsService.GetAllOrderDetailsOfMyProducts(userId).subscribe(result => {
       this.OrderDetailsList = result;
     });
+    this.OrderDetailsService.GetTotalProfitsOfMyProducts(userId).subscribe(res=>{
+      this.netProfit = res;
+    })
+  }
+
+  displayProductSoldThisMonth(monthId:number){
+    debugger
+    this.OrderDetailsService.GetAllOrderDetailsOfMyProductsByMonth(this.userId,monthId).subscribe(result => {
+      this.OrderDetailsList = result;
+    });
+    debugger
+    this.OrderDetailsService.GetTotalProfitOfMyProductsOfThisMonth(this.userId,monthId).subscribe(res=>{
+      this.netProfit = res;
+    })
   }
 
   async onDeleteOrderDetails(Id: number) {
@@ -144,6 +174,7 @@ debugger
 
   ngOnInit() {
     var userId = Number(localStorage.getItem('userId'));
+    this.userId = userId;
     this.getOrderDetails(userId);
   }
 

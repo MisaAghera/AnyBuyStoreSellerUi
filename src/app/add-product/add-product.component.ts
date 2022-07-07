@@ -78,7 +78,6 @@ export class AddProductComponent implements OnInit {
   }
 
   async onSubmit(formValues: any) {
-    console.log(this.newProductForm)
     this.submitted = true;
     if (this.newProductForm.invalid) {
       return;

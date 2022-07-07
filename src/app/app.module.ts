@@ -20,6 +20,8 @@ import { ProductsingleComponent } from './productsingle/productsingle.component'
 import { AuthGuard } from './shared/services/auth-guard.guard';
 import { NgxPopper } from 'angular-popper';
 import { OrdersComponent } from './orders/orders.component';
+import { ProfileDetailsComponent } from './profile-details/profile-details.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,9 @@ import { OrdersComponent } from './orders/orders.component';
     ProductsComponent,
     ProductsingleComponent,
     OrdersComponent,
+    ProfileDetailsComponent,
   ],
+  
   imports: [
     BrowserModule, 
     AppRoutingModule,

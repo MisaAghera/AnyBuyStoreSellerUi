@@ -15,9 +15,10 @@
                   product</span></a></li>
             <li><a routerLink="/products"><i class="bi bi-person-check"></i> <span class="item-text">Products</span></a>
             </li>
-            <li><a routerLink="/orders"><i class="bi bi-person-check"></i> <span class="item-text">orders</span></a>
+            <li><a routerLink="/orders"><i class="bi bi-card-list"></i> <span class="item-text">orders</span></a>
             </li>
-            <li><a href="#"><i class="bi bi-graph-up"></i> <span class="item-text">Analytics</span></a></li>
+            <li><a routerLink="/profile" ><i class="bi bi-person-check"></i><span class="item-text">profile</span></a>
+            </li>
           </ul>
         </div>
       </div>
@@ -39,8 +40,8 @@
             <span class="textnone">{{userName}}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><button class="dropdown-item" type="button"><i class="bi bi-lock-fill"></i> Change Password</button>
-            </li>
+            <!-- <li><button class="dropdown-item" type="button"><i class="bi bi-lock-fill"></i> Change Password</button>
+            </li> -->
             <li><button class="dropdown-item" type="button" (click)="logout()"><i class="bi bi-box-arrow-right"></i>
                 Sign out</button></li>
           </ul>

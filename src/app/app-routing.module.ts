@@ -8,6 +8,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsingleComponent } from './productsingle/productsingle.component';
 import { AuthGuard } from './shared/services/auth-guard.guard';
 import { OrdersComponent } from './orders/orders.component';
+import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 
 const routes: Routes = [
   { path:"product/addEdit/:id", component:AddProductComponent , canActivate: [AuthGuard] },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path:"product/:id", component:ProductsingleComponent , canActivate: [AuthGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path:"orders", component:OrdersComponent, canActivate: [AuthGuard] },
+  { path:"profile", component:ProfileDetailsComponent , canActivate: [AuthGuard]},
 
 ];
 

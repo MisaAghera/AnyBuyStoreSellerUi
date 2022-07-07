@@ -29,6 +29,62 @@
                 </ul>
             </div>
         </div>
+        <div class="col-sm-1">
+            <div class="dropdown">
+                <button class="dropdown-toggle button-style" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-filter icon-style"></i>
+                </button>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item" tabindex="-1">month</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(1)">january</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(2)">february</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(3)">march</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(4)">april</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1" (click)="displayProductSoldThisMonth(5)">may</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1" (click)="displayProductSoldThisMonth(6)">june</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1" (click)="displayProductSoldThisMonth(7)">july</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(8)">august</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(9)">september</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(10)">october</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(11)">november</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(12)">december</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <button class="button-style " (click)="getOrderDetails(userId)"><i class="fa fa-times icon-style"></i></button>
+          </div>
+        <div class="">
+            <input type="number" #Year (keyup.enter)="onSubmitFilterByYear(Year.value)"
+                (blur)="onSubmitFilterByYear(Year.value); Year.value='' " placeholder="year">
+            <!-- <button type="button" (click)="onSubmitFilterByYear(Year.value)">Search</button> -->
+        </div>
     </div>
 </div>
 
@@ -38,7 +94,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">discount Details</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Order Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form [formGroup]="newOrderDetailsForm" autocomplete="off" novalidate
@@ -67,7 +123,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                
+
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label for="orderId" class="mb-0">orderId</label>
@@ -197,6 +253,14 @@
                                                     data-toggle="tooltip" title="" data-original-title="Delete"><i
                                                         class="fa fa-trash"></i></a></li>
                                         </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-center" >
+                                        <h3>net profit</h3>
+                                    </td>
+                                    <td colspan="4">
+                                        <h3>{{netProfit|currency:"INR"}}</h3>
                                     </td>
                                 </tr>
                             </tbody>

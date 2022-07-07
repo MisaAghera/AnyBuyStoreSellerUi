@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserForRegistrationModel } from '../shared/models/user-for-registration-model.model';
 import { FormControl, AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidation } from "../shared/providers/custom-validators";
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -21,10 +22,10 @@ export class SignupComponent implements OnInit {
   });
 
   submitted = false;
-  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder) { }
+  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder,  private router: Router) { }
 
   ngOnInit(): void {
-   
+
 
     this.registerForm = this.formBuilder.group(
       {
@@ -74,13 +75,16 @@ export class SignupComponent implements OnInit {
     userForRegister.In.email = formValues.email;
     userForRegister.In.phoneNumber = formValues.phoneNumber;
 
-    if(formValues.age!='')
-    userForRegister.In.age = formValues.age;
-    if(formValues.gender!='' &&formValues.gender!=null )
+    if (formValues.age != '')
+      userForRegister.In.age = formValues.age;
+    if (formValues.gender != '' && formValues.gender != null)
       userForRegister.In.gender = formValues.gender;
     this.authService.registerUser(userForRegister)
       .subscribe({
-        next: (_) => console.log("Successful registration"),
+        next: (_) => {
+          alert("Successful registration");
+          this.router.navigate(["/login"]);
+        },
         error: (err: HttpErrorResponse) => console.log(err.error.errors)
       })
   }

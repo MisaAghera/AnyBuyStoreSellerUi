@@ -6,6 +6,7 @@ import { AuthenticationService } from '../shared/services/authentication.service
 import { DiscountModel } from '../shared/models/discount-model.model';
 import { DiscountsService } from '../shared/services/discounts.service';
 import { GlobalConstants } from '../shared/global-constants.model';
+import { OrderDetailsService } from '../shared/services/order-details.service';
 @Component({
   selector: 'app-productsingle',
   templateUrl: './productsingle.component.html',
@@ -16,21 +17,31 @@ export class ProductsingleComponent implements OnInit {
   DiscountDetails: DiscountModel = new DiscountModel();
   public isUserAuthenticated: boolean = false;
   public isValidProductOwner: boolean = false;
+  userId = Number(localStorage.getItem('userId'));
+  netProfit:number=0;
 
   constructor(public authService: AuthenticationService,
     public route: ActivatedRoute,
     public ProductService: ProductService,
     public DiscountService: DiscountsService,
-    private router: Router) { }
+    private router: Router,
+    public OrderDetailsService:OrderDetailsService) { }
 
   async getById(id: number): Promise<void> {
     await this.ProductService.getById(id).subscribe(async result => {
       this.ProductDetails = result;
       await this.getDiscountFunction(result);
       await this.IsValidOwner(result);
+      await this.GetNetProfitOfProduct(id);
     });
   }
 
+  async GetNetProfitOfProduct(id:number){
+    await this.OrderDetailsService.GetTotalProfitByProductId(this.userId,id).subscribe(res=>{
+        this.netProfit = res;
+    })
+
+  }
   
   async getDiscountFunction(result: ProductModel) {
     await this.DiscountService.GetById(result.discountId!).subscribe(

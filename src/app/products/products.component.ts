@@ -18,7 +18,7 @@ export class ProductsComponent implements OnInit {
   Categorylist?: CategoryModel[];
   SubcategoryList?: SubcategoryModel[];
   ProductList?: ProductModel[];
-  DiscountList?:DiscountModel[];
+  DiscountList?: DiscountModel[];
   DiscountDetails: DiscountModel = new DiscountModel();
 
   filterTerm?: any;
@@ -26,9 +26,9 @@ export class ProductsComponent implements OnInit {
   count: number = 0;
   tableSize: number = 8;
   tableSizes: any = [3, 6, 9, 12];
- 
 
-  constructor(public DiscountsService: DiscountsService,public service: ProductService, public CategoriesService: CategoriesService, public SubcategoriesService: SubcategoriesService) { }
+
+  constructor(public DiscountsService: DiscountsService, public service: ProductService, public CategoriesService: CategoriesService, public SubcategoriesService: SubcategoriesService) { }
 
   getProducts(): void {
     this.service.getAll().subscribe(result => {
@@ -49,11 +49,11 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  getProductsByDiscount(discountId: number){
+  getProductsByDiscount(discountId: number) {
     this.service.GetAllProductByDiscountId(discountId).subscribe(result => {
       this.ProductList = result;
     });
-}
+  }
   async getDiscountFunction() {
     await this.DiscountsService.getAll().subscribe(
       res => {
