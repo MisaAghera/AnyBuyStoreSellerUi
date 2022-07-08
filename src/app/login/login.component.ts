@@ -63,9 +63,10 @@ export class LoginComponent implements OnInit {
           document.getElementById("success-alert")!.style.display = "block";
           document.getElementById("danger-alert")!.style.display = "none";
           document.getElementById("success-alert")!.innerHTML = "logged in successfully";
+          localStorage.setItem("refreshtoken",res.refreshtoken!);
           localStorage.setItem("token", res.token);
-          localStorage.setItem("userId", res.userId.toString());
-          localStorage.setItem("userName",res.userName.toString());
+          localStorage.setItem("userId", res.userId!.toString());
+          localStorage.setItem("userName",res.userName!.toString());
           this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
           this.router.navigate([this.returnUrl]);
         },

@@ -1,7 +1,9 @@
 export class AuthResponseModel {
     token: string='';
-    userId : number = 0;
-    userName : string = '';
+    refreshtoken?:string;
+    userId? : number;
+    userName? : string;
     isAuthSuccessful: boolean  = true;
-    errorMessage: string= '';
+    errorMessage?: string;
+    expiration?:any
 }
