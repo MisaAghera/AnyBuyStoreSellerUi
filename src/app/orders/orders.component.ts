@@ -7,6 +7,8 @@ import { OrderService } from '../shared/services/order.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DiscountsService } from '../shared/services/discounts.service';
+import { AddressService } from '../shared/services/address.service';
+import { AddressModel } from '../shared/models/address-model';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -16,6 +18,7 @@ export class OrdersComponent implements OnInit {
   OrderList?: OrderModel[];
   OrderDetailsList?: OrderDetailsModel[];
   OrderDetailDetails?:OrderDetailsModel;
+  AddressDetails?:AddressModel;
   filterTerm?: any;
   page: number = 1;
   count: number = 0;
@@ -39,6 +42,14 @@ export class OrdersComponent implements OnInit {
   });
 
 
+  getOrderAddress(orderDetailsId:number){
+    this.OrderDetailsService.getById(orderDetailsId).subscribe(res=>{
+      this.AddressService.getByOrderId(res.orderId).subscribe(res=>{
+        this.AddressDetails = res;
+        console.log(this.AddressDetails);
+      });
+    });
+  }
   onSubmitFilterByYear(Year:string){
 
     var year = Number(Year); 
@@ -82,7 +93,6 @@ export class OrdersComponent implements OnInit {
 
 
   async onEditSubmit(formValues: any) {
-debugger
     const formValue = { ...formValues };
     var Details: InModelOrderDetails = new InModelOrderDetails();
   
@@ -107,7 +117,8 @@ debugger
     private formBuilder: FormBuilder,
     private orderService:OrderService,
     private DiscountsService:DiscountsService,
-    private OrderDetailsService:OrderDetailsService
+    private OrderDetailsService:OrderDetailsService,
+    private AddressService:AddressService
     ) { }
 
    
@@ -121,11 +132,9 @@ debugger
   }
 
   displayProductSoldThisMonth(monthId:number){
-    debugger
     this.OrderDetailsService.GetAllOrderDetailsOfMyProductsByMonth(this.userId,monthId).subscribe(result => {
       this.OrderDetailsList = result;
     });
-    debugger
     this.OrderDetailsService.GetTotalProfitOfMyProductsOfThisMonth(this.userId,monthId).subscribe(res=>{
       this.netProfit = res;
     })

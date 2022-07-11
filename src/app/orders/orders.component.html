@@ -78,8 +78,9 @@
             </div>
         </div>
         <div class="col-sm-1">
-            <button class="button-style " (click)="getOrderDetails(userId)"><i class="fa fa-times icon-style"></i></button>
-          </div>
+            <button class="button-style " (click)="getOrderDetails(userId)"><i
+                    class="fa fa-times icon-style"></i></button>
+        </div>
         <div class="">
             <input type="number" #Year (keyup.enter)="onSubmitFilterByYear(Year.value)"
                 (blur)="onSubmitFilterByYear(Year.value); Year.value='' " placeholder="year">
@@ -205,8 +206,9 @@
                                     <th class="text-center">orderId</th>
                                     <th class="text-center">discountId</th>
                                     <th class="text-center">quantity </th>
-                                    <th class="action text-right">status</th>
-                                    <th class="action text-right">price</th>
+                                    <th class="text-center">status</th>
+                                    <th class="text-center">price</th>
+                                    <th class="text-center" colspan="2">Address</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -243,6 +245,19 @@
                                         <span class="candidate-list-time order-1">{{order.price *
                                             order.quantity|currency:"INR"}}</span>
                                     </td>
+                                    <td colspan="2" class="text-center" class="candidate-list-favourite-time text-center">
+                                        <p>
+                                        <button class="text-center" (click)="getOrderAddress(order.id)" class="btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            click
+                                          </button>
+                                        </p>
+                                        <div class="collapse" id="collapseExample">
+                                          <div class="card card-body" class="text-center">
+                                            {{AddressDetails?.house}}, {{AddressDetails?.street}}, {{AddressDetails?.city}},
+                                            {{AddressDetails?.state}}, {{AddressDetails?.country}},pin : {{AddressDetails?.zipCode}} 
+                                          </div>
+                                        </div>
+                                    </td>
                                     <td>
                                         <ul class="list-unstyled mb-0 d-flex justify-content-front">
                                             <li><a (click)="getOrderDetailById(order.id)" class="text-info"
@@ -256,7 +271,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5" class="text-center" >
+                                    <td colspan="5" class="text-center">
                                         <h3>net profit</h3>
                                     </td>
                                     <td colspan="4">

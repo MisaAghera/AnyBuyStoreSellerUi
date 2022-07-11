@@ -21,6 +21,7 @@ import { AuthGuard } from './shared/services/auth-guard.guard';
 import { NgxPopper } from 'angular-popper';
 import { OrdersComponent } from './orders/orders.component';
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
+import { PasswordChangeComponent } from './password-change/password-change.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ProfileDetailsComponent } from './profile-details/profile-details.compo
     ProductsingleComponent,
     OrdersComponent,
     ProfileDetailsComponent,
+    PasswordChangeComponent,
   ],
   
   imports: [

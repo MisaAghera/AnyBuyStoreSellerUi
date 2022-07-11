@@ -21,7 +21,6 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
        
     return next.handle(request).pipe(
       catchError(errordata=>{
-        debugger
         console.log(errordata.status);
         if(errordata.status === 401){
           return this.handleRefreshToken(request,next);

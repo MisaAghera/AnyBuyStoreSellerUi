@@ -7,6 +7,7 @@ import { GlobalConstants } from '../global-constants.model';
 import { UserForAuthenticationModel } from '../models/user-for-authentication-model.model';
 import { UserForRegistrationModel } from '../models/user-for-registration-model.model';
 import { Router } from '@angular/router';
+import { PasswordChangeModel } from '../models/password-change-model';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +16,7 @@ export class AuthenticationService {
   formDataLogin: UserForAuthenticationModel = new UserForAuthenticationModel();
   readonly LoginUrl = GlobalConstants.apiURL + 'Authenticate/LoginSeller';
   readonly RegisterUrl = GlobalConstants.apiURL + 'Authenticate/RegisterSeller';
+  readonly PasswordChangeUrl = GlobalConstants.apiURL+ 'Authenticate/ChangePassword';
   private authChangeSub: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public authChanged: Observable<boolean> = this.authChangeSub.asObservable();
   readonly LoginRefreshUrl = GlobalConstants.apiURL + 'Authenticate/Refresh';
@@ -37,6 +39,10 @@ export class AuthenticationService {
     else {
       this.sendAuthStateChangeNotification(true);
     }
+  }
+
+  changePassword(body:InModelPasswordChange){
+      return this.http.post(this.PasswordChangeUrl,body);
   }
 
   generateRefreshToken() {
@@ -92,4 +98,8 @@ class InModelAuth {
 }
 class InModelRegister {
   In: UserForRegistrationModel = new UserForRegistrationModel();
+}
+
+class InModelPasswordChange{
+  In:PasswordChangeModel = new PasswordChangeModel();
 }
