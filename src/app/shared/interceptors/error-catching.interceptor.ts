@@ -7,11 +7,12 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorCatchingInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     
@@ -28,6 +29,9 @@ export class ErrorCatchingInterceptor implements HttpInterceptor {
                 } else {
                     console.log('This is server side error');
                     errorMsg = `Error Code: ${error.status},  Message: ${error.error.message}`;
+                    if(error.status == 500 || error.status ==0){
+                        this.router.navigate(['/serverError']);
+                    }
                 }
                 console.log(errorMsg);
                 return throwError(errorMsg);

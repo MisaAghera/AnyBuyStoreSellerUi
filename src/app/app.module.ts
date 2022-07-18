@@ -22,6 +22,7 @@ import { NgxPopper } from 'angular-popper';
 import { OrdersComponent } from './orders/orders.component';
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PasswordChangeComponent } from './password-change/password-change.compo
     OrdersComponent,
     ProfileDetailsComponent,
     PasswordChangeComponent,
+    ServerErrorComponent,
   ],
   
   imports: [

@@ -20,4 +20,6 @@ export class ProductModel {
 
     quantity: number = 0;
 
+    discountValue?:number;
+
 }
