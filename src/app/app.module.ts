@@ -15,7 +15,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorInterceptor } from './shared/interceptors/auth-interceptor.interceptor';
 import { ButtonModule, CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
-import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 import { ProductsingleComponent } from './productsingle/productsingle.component';
 import { AuthGuard } from './shared/services/auth-guard.guard';
 import { NgxPopper } from 'angular-popper';
@@ -48,7 +47,6 @@ import { ServerErrorComponent } from './server-error/server-error.component';
     ReactiveFormsModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
-    ToastModule,
     ButtonModule,
     NgxPopper
     

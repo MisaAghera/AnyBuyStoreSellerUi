@@ -18,12 +18,12 @@ const routes: Routes = [
   { path:"products", component:ProductsComponent, canActivate: [AuthGuard]  },
   {path: "product-card",component:ProductCardComponent, canActivate: [AuthGuard] },
   { path:"product/:id", component:ProductsingleComponent , canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path:"orders", component:OrdersComponent, canActivate: [AuthGuard] },
   { path:"profile", component:ProfileDetailsComponent , canActivate: [AuthGuard]},
   { path:"passwordChange", component:PasswordChangeComponent , canActivate: [AuthGuard]},
   { path:"serverError", component:ServerErrorComponent },
 
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
 
 ];
 
