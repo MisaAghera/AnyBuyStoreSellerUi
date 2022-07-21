@@ -1,9 +1,9 @@
 export class OrderDetailsModel {
     id:number=0;
 
-    productId:number=0;
+    productId?:number;
 
-    orderId:number=0;
+    orderId?:number;
 
     discountId?:number;
 
